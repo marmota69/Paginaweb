@@ -161,7 +161,9 @@ return [
     */
 
     'features' => [
-        Features::registration(),
+        // Registration is deliberately absent: this is one person's portfolio
+        // and the only account is the owner's, seeded at install. Leaving it on
+        // would let anyone sign up and walk straight into the dashboard.
         Features::resetPasswords(),
         Features::emailVerification(),
         Features::twoFactorAuthentication([

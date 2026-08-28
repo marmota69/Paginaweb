@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\SiteSetting;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Resolved once per request: nearly every public view reads from it.
+        $this->app->scoped(SiteSetting::class, fn (): SiteSetting => SiteSetting::query()->firstOrCreate([]));
     }
 
     /**

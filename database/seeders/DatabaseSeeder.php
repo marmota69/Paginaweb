@@ -15,11 +15,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->seedOwner();
+
+        $this->call([
+            SiteContentSeeder::class,
+            PortfolioSeeder::class,
+            AnalyticsSeeder::class,
+        ]);
+    }
+
+    /**
+     * Create the single account that administers the portfolio. Re-seeding
+     * leaves an existing account — and its password — untouched.
+     */
+    private function seedOwner(): void
+    {
+        $email = config('portfolio.owner_email');
+
+        if (User::query()->where('email', $email)->exists()) {
+            $this->command->info("Owner account [{$email}] already exists — left untouched.");
+
+            return;
+        }
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Héctor Zamorano',
+            'email' => $email,
         ]);
+
+        $this->command->info("Owner account [{$email}] created with password [password].");
     }
 }

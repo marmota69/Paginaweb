@@ -1,27 +1,37 @@
 <?php
 
+use App\Models\User;
 use Laravel\Fortify\Features;
 
-beforeEach(function () {
-    $this->skipUnlessFortifyHas(Features::registration());
+/*
+ | This is one person's portfolio. The only account is the owner's, created by
+ | the seeder at install time, so self-service registration is switched off in
+ | config/fortify.php — with it on, anyone could sign up and reach the
+ | dashboard, which administers the whole public site.
+ */
+
+test('registration is not an enabled feature', function () {
+    expect(Features::enabled(Features::registration()))->toBeFalse();
 });
 
-test('registration screen can be rendered', function () {
-    $response = $this->get(route('register'));
-
-    $response->assertOk();
+test('the registration screen is not reachable', function () {
+    $this->get('/register')->assertNotFound();
 });
 
-test('new users can register', function () {
-    $response = $this->post(route('register.store'), [
-        'name' => 'John Doe',
-        'email' => 'test@example.com',
+test('nobody can create an account by posting to the register endpoint', function () {
+    $this->post('/register', [
+        'name' => 'Intruso',
+        'email' => 'intruso@example.test',
         'password' => 'password',
         'password_confirmation' => 'password',
-    ]);
+    ])->assertNotFound();
 
-    $response->assertSessionHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
+    expect(User::query()->where('email', 'intruso@example.test')->exists())->toBeFalse();
+    $this->assertGuest();
+});
 
-    $this->assertAuthenticated();
+test('the dashboard stays closed to anyone without an account', function () {
+    $this->get(route('dashboard.content'))->assertRedirect(route('login'));
+    $this->get(route('dashboard.projects'))->assertRedirect(route('login'));
+    $this->get(route('dashboard.messages'))->assertRedirect(route('login'));
 });

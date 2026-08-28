@@ -7,10 +7,11 @@ test('guests are redirected to the login page', function () {
     $response->assertRedirect(route('login'));
 });
 
-test('authenticated users can visit the dashboard', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+test('the dashboard opens on the content editor', function () {
+    // There is no separate overview screen. /dashboard is only the entry point
+    // Fortify redirects to after login; it hands straight over to the editor.
+    $this->actingAs(User::factory()->create());
 
-    $response = $this->get(route('dashboard'));
-    $response->assertOk();
+    $this->get(route('dashboard'))->assertRedirect(route('dashboard.content'));
+    $this->get(route('dashboard.content'))->assertOk();
 });

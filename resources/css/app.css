@@ -64,3 +64,506 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Dashboard kit
+   The portfolio editors live inside the Flux sidebar shell, so they cannot
+   load the public site's stylesheet. These are the same component classes,
+   retuned to the dashboard's neutral palette and driven by the `dark` class
+   that Flux already toggles — which keeps one theme across the whole site.
+   ══════════════════════════════════════════════════════════════════════ */
+
+:root {
+    --hz-surface: #ffffff;
+    --hz-surface-2: #f5f5f4;
+    --hz-border: #e5e5e5;
+    --hz-text: #1a1d24;
+    --hz-muted: #6b7280;
+    --hz-accent: #1f3557;
+    --hz-accent-soft: #e9edf4;
+    --hz-danger: #8e4a4a;
+    --hz-radius: 2px;
+}
+
+.dark {
+    --hz-surface: #1c1f27;
+    --hz-surface-2: #14161c;
+    --hz-border: #33383f;
+    --hz-text: #edece7;
+    --hz-muted: #9ca3af;
+    --hz-accent: #8aa6cb;
+    --hz-accent-soft: #1b2434;
+    --hz-danger: #b36a6a;
+}
+
+@layer components {
+    .hz-page {
+        color: var(--hz-text);
+    }
+    .hz-page h2,
+    .hz-page h3,
+    .hz-page legend {
+        color: var(--hz-text);
+    }
+
+    /* — surfaces — */
+    .card {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        background: var(--hz-surface);
+        border: 1px solid var(--hz-border);
+        border-radius: var(--hz-radius);
+    }
+    .card-title {
+        font-weight: 700;
+        font-size: 17px;
+        line-height: 1.2;
+        color: var(--hz-text);
+    }
+    .elev-sm {
+        box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+    }
+    .elev-md {
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.08);
+    }
+    .elev-lg {
+        box-shadow: 0 12px 32px rgb(0 0 0 / 0.18);
+    }
+    .text-muted {
+        color: var(--hz-muted);
+    }
+    .hr {
+        height: 1px;
+        border: 0;
+        margin: 16px 0;
+        background: var(--hz-border);
+    }
+
+    /* — forms — */
+    .field > label,
+    .hz-bilingual-label {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 5px;
+        color: var(--hz-muted);
+    }
+    .hz-bilingual-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+    }
+    .hz-bilingual-locale {
+        display: block;
+        font-weight: 600;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+        color: var(--hz-muted);
+    }
+    .input {
+        width: 100%;
+        min-height: 36px;
+        padding: 6px 10px;
+        font: inherit;
+        font-size: 14px;
+        color: var(--hz-text);
+        background: var(--hz-surface-2);
+        border: 1px solid var(--hz-border);
+        border-radius: var(--hz-radius);
+    }
+    .input:focus-visible {
+        outline: none;
+        border-color: var(--hz-accent);
+    }
+    textarea.input {
+        min-height: 90px;
+        resize: vertical;
+    }
+    .field-error {
+        color: var(--hz-danger);
+        font-size: 12px;
+        margin-top: 4px;
+    }
+    .hz-field-hint {
+        font-size: 11.5px;
+        margin-top: 4px;
+    }
+    .radio,
+    .check {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        color: var(--hz-text);
+    }
+    .radio input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .radio .dot {
+        width: 16px;
+        height: 16px;
+        flex: none;
+        border-radius: 50%;
+        border: 1.5px solid var(--hz-border);
+    }
+    .radio input:checked + .dot {
+        border-color: var(--hz-accent);
+        background: var(--hz-accent);
+        box-shadow: inset 0 0 0 4px var(--hz-surface);
+    }
+    .check input {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--hz-accent);
+        margin: 0;
+    }
+
+    /* — buttons — */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.2;
+        color: var(--hz-text);
+        background: transparent;
+        border: 1px solid transparent;
+        padding: 8px 14px;
+        border-radius: var(--hz-radius);
+    }
+    .btn svg {
+        display: block;
+    }
+    .btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+    .btn-primary {
+        background: var(--hz-accent);
+        color: var(--hz-surface);
+    }
+    .btn-primary:hover {
+        opacity: 0.9;
+    }
+    .btn-secondary {
+        border-color: var(--hz-border);
+    }
+    .btn-secondary:hover {
+        background: var(--hz-surface-2);
+    }
+    .btn-ghost {
+        color: var(--hz-accent);
+        padding-inline: 4px;
+    }
+    .btn-ghost:hover {
+        background: var(--hz-accent-soft);
+    }
+    .btn-icon {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+    }
+
+    /* — tags — */
+    .tag {
+        display: inline-flex;
+        align-items: center;
+        font-size: 11px;
+        padding: 3px 10px;
+        border-radius: var(--hz-radius);
+    }
+    .tag-accent {
+        background: var(--hz-accent-soft);
+        color: var(--hz-accent);
+    }
+    .tag-neutral {
+        background: var(--hz-surface-2);
+        color: var(--hz-muted);
+    }
+    .tag-outline {
+        border: 1px solid var(--hz-border);
+        color: var(--hz-muted);
+    }
+
+    /* — tables — */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        color: var(--hz-text);
+    }
+    .table th {
+        text-align: left;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--hz-muted);
+        padding: 8px;
+        border-bottom: 2px solid var(--hz-border);
+    }
+    .table td {
+        padding: 8px;
+        border-bottom: 1px solid var(--hz-border);
+    }
+
+    /* — dialogs — */
+    .dialog-backdrop {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 16px;
+        background: rgb(0 0 0 / 0.5);
+    }
+    .dialog {
+        width: min(440px, 100%);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px;
+        background: var(--hz-surface);
+        border: 1px solid var(--hz-border);
+        border-radius: var(--hz-radius);
+    }
+    .dialog-title {
+        font-weight: 700;
+        font-size: 20px;
+        color: var(--hz-text);
+    }
+    .dialog-body {
+        font-size: 14px;
+        color: var(--hz-muted);
+    }
+    .dialog-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    /* — overview — */
+    .hz-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1px;
+        background: var(--hz-border);
+        border: 1px solid var(--hz-border);
+        margin-bottom: 28px;
+    }
+    .hz-stat {
+        background: var(--hz-surface);
+        padding: 20px 18px;
+    }
+    .hz-stat-label {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+    .hz-stat-value {
+        font-weight: 800;
+        font-size: 32px;
+        letter-spacing: -0.02em;
+        color: var(--hz-text);
+    }
+    .hz-stat-delta {
+        font-size: 12px;
+        color: var(--hz-accent);
+        margin-top: 4px;
+    }
+    .hz-panels {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 28px;
+    }
+    .hz-chart {
+        display: flex;
+        align-items: flex-end;
+        gap: 6px;
+        height: 190px;
+    }
+    .hz-chart-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 6px;
+        height: 100%;
+    }
+    .hz-chart-bar {
+        background: color-mix(in srgb, var(--hz-text) 25%, transparent);
+    }
+    .hz-chart-col.is-current .hz-chart-bar {
+        background: var(--hz-accent);
+    }
+    .hz-chart-label {
+        font-size: 10px;
+        text-align: center;
+    }
+
+    /* — list + form editors — */
+    .hz-crud {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+        gap: 32px;
+    }
+    .hz-crud h2 {
+        margin: 0 0 18px;
+        font-size: 28px;
+        font-weight: 800;
+    }
+    .hz-crud-row {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        padding: 18px 0;
+        border-top: 1px solid var(--hz-border);
+    }
+    .hz-crud-row-main {
+        flex: 1;
+    }
+    .hz-crud-row-title {
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 4px;
+        color: var(--hz-text);
+    }
+    .hz-crud-row-meta {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .hz-crud-form {
+        padding: 26px;
+        align-self: start;
+        gap: 16px;
+    }
+    .hz-crud-form-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .hz-field-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+    .hz-fieldset {
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+    .hz-fieldset legend {
+        padding: 0;
+        font-size: 12px;
+        margin-bottom: 5px;
+        color: var(--hz-muted);
+    }
+    .hz-levels {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin-top: 4px;
+    }
+    .hz-form-actions {
+        display: flex;
+        gap: 10px;
+    }
+    .hz-thumb {
+        width: 100%;
+        max-width: 210px;
+        border: 1px solid var(--hz-border);
+    }
+    .hz-empty {
+        padding: 26px 0;
+        font-size: 14px;
+    }
+
+    /* — tabbed content editor — */
+    .hz-editor {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        max-width: 900px;
+    }
+    .hz-editor-tabs {
+        display: inline-flex;
+        flex-wrap: wrap;
+        border: 1px solid var(--hz-border);
+        border-radius: var(--hz-radius);
+        overflow: hidden;
+    }
+    .hz-editor-tabs button {
+        border: 0;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 13px;
+        padding: 8px 16px;
+        background: transparent;
+        color: var(--hz-text);
+        border-right: 1px solid var(--hz-border);
+    }
+    .hz-editor-tabs button[aria-selected='true'] {
+        background: var(--hz-accent);
+        color: var(--hz-surface);
+    }
+    .hz-editor-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: 26px;
+    }
+    .hz-editor-bar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding-top: 14px;
+        border-top: 1px solid var(--hz-border);
+    }
+    .hz-fieldset-group {
+        border: 1px solid var(--hz-border);
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .hz-fieldset-group > legend {
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0 8px;
+        color: var(--hz-accent);
+    }
+    .hz-inline-actions {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+    .hz-skill-row {
+        display: grid;
+        grid-template-columns: 1fr 110px auto;
+        gap: 10px;
+        align-items: end;
+        padding: 12px 0;
+        border-top: 1px solid var(--hz-border);
+    }
+
+    @media (max-width: 640px) {
+        .hz-skill-row,
+        .hz-field-pair {
+            grid-template-columns: 1fr;
+        }
+    }
+}

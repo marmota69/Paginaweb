@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
     </head>
@@ -11,9 +11,41 @@
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
+                <flux:sidebar.group :heading="__('portfolio.admin.panel')" class="grid">
+                    <flux:sidebar.item icon="identification" :href="route('dashboard.content')" :current="request()->routeIs('dashboard.content')" wire:navigate>
+                        {{ __('portfolio.admin.content') }}
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="squares-2x2" :href="route('dashboard.projects')" :current="request()->routeIs('dashboard.projects')" wire:navigate>
+                        {{ __('portfolio.admin.projects') }}
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="briefcase" :href="route('dashboard.experiences')" :current="request()->routeIs('dashboard.experiences')" wire:navigate>
+                        {{ __('portfolio.admin.experience') }}
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="chart-bar" :href="route('dashboard.skills')" :current="request()->routeIs('dashboard.skills')" wire:navigate>
+                        {{ __('portfolio.admin.skills') }}
+                    </flux:sidebar.item>
+                </flux:sidebar.group>
+
+                <flux:sidebar.group :heading="__('portfolio.admin.publishing')" class="grid">
+                    <flux:sidebar.item icon="academic-cap" :href="route('dashboard.courses')" :current="request()->routeIs('dashboard.courses')" wire:navigate>
+                        {{ __('portfolio.admin.courses') }}
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="book-open-text" :href="route('dashboard.guides')" :current="request()->routeIs('dashboard.guides')" wire:navigate>
+                        {{ __('portfolio.admin.guides') }}
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item
+                        icon="inbox"
+                        :href="route('dashboard.messages')"
+                        :current="request()->routeIs('dashboard.messages')"
+                        :badge="\App\Models\ContactMessage::query()->unread()->count() ?: null"
+                        wire:navigate
+                    >
+                        {{ __('portfolio.admin.messages') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
@@ -21,12 +53,8 @@
             <flux:spacer />
 
             <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    {{ __('Repository') }}
-                </flux:sidebar.item>
-
-                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                    {{ __('Documentation') }}
+                <flux:sidebar.item icon="globe-alt" :href="route('home')">
+                    {{ __('portfolio.admin.view_site') }}
                 </flux:sidebar.item>
             </flux:sidebar.nav>
 
